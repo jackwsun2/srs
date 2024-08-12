@@ -35,11 +35,11 @@ private:
     SrsWallClock* clk_;
 private:
     // samples
+    SrsRateSample sample_5s_;
     SrsRateSample sample_10s_;
     SrsRateSample sample_30s_;
     SrsRateSample sample_1m_;
-    SrsRateSample sample_5m_;
-    SrsRateSample sample_60m_;
+    SrsRateSample sample_5m_;    
 public:
     // Sugar for target to stat.
     int64_t sugar;
@@ -51,10 +51,16 @@ public:
     void update();
     // Update with the nn.
     void update(int64_t nn);
+    // Get the 5s average stat.
+    int r5s();
     // Get the 10s average stat.
     int r10s();
     // Get the 30s average stat.
     int r30s();
+    // Get the 1 minutes average stat.
+    int r1m();
+    // Get the 5 minutes average stat.
+    int r5m();
 };
 
 /**

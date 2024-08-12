@@ -64,12 +64,15 @@ void SrsPps::update(int64_t nn)
 
     srs_utime_t now = clk_->now();
 
+    srs_pps_init(sample_5s_, nn, now);
     srs_pps_init(sample_10s_, nn, now);
     srs_pps_init(sample_30s_, nn, now);
     srs_pps_init(sample_1m_, nn, now);
-    srs_pps_init(sample_5m_, nn, now);
-    srs_pps_init(sample_60m_, nn, now);
+    srs_pps_init(sample_5m_, nn, now);    
 
+    if (now - sample_5s_.time >= 5 * SRS_UTIME_SECONDS) {
+        srs_pps_update(sample_5s_, nn, now);
+    }
     if (now - sample_10s_.time >= 10 * SRS_UTIME_SECONDS) {
         srs_pps_update(sample_10s_, nn, now);
     }
@@ -82,9 +85,11 @@ void SrsPps::update(int64_t nn)
     if (now - sample_5m_.time >= 300 * SRS_UTIME_SECONDS) {
         srs_pps_update(sample_5m_, nn, now);
     }
-    if (now - sample_60m_.time >= 3600 * SRS_UTIME_SECONDS) {
-        srs_pps_update(sample_60m_, nn, now);
-    }
+}
+
+int SrsPps::r5s()
+{
+    return sample_5s_.rate;
 }
 
 int SrsPps::r10s()
@@ -95,6 +100,16 @@ int SrsPps::r10s()
 int SrsPps::r30s()
 {
     return sample_30s_.rate;
+}
+
+int SrsPps::r1m()
+{
+    return sample_1m_.rate;
+}
+
+int SrsPps::r5m()
+{
+    return sample_5m_.rate;
 }
 
 SrsWallClock::SrsWallClock()
