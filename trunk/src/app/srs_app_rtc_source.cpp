@@ -680,8 +680,10 @@ void SrsRtcSource::on_unpublish()
         _srs_hybrid->timer100ms()->unsubscribe(this);
 
 #ifdef SRS_FFMPEG_FIT
-        frame_builder_->on_unpublish();
-        srs_freep(frame_builder_);
+        if (frame_builder_) {
+            frame_builder_->on_unpublish();
+            srs_freep(frame_builder_);
+        }
 #endif
 
         bridge_->on_unpublish();
