@@ -142,12 +142,14 @@ srs_error_t SrsCoWorkers::on_publish(SrsRequest* r)
 
 void SrsCoWorkers::on_unpublish(SrsRequest* r)
 {
-    string url = r->get_stream_url();
-    
-    map<string, SrsRequest*>::iterator it = streams.find(url);
-    if (it != streams.end()) {
-        srs_freep(it->second);
-        streams.erase(it);
+    if (r) {
+        string url = r->get_stream_url();
+        
+        map<string, SrsRequest*>::iterator it = streams.find(url);
+        if (it != streams.end()) {
+            srs_freep(it->second);
+            streams.erase(it);
+        }
     }
 }
 
