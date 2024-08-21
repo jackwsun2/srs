@@ -329,6 +329,10 @@ cp -f $SRS_WORKDIR/research/api-server/static-dir/favicon.ico ${SRS_OBJS}/nginx/
 rm -rf ${SRS_OBJS}/nginx/html/console &&
 cp -rf $SRS_WORKDIR/research/console ${SRS_OBJS}/nginx/html/ &&
 
+# copy webcast to nginx html dir.
+rm -rf ${SRS_OBJS}/nginx/html/webcast &&
+cp -rf $SRS_WORKDIR/research/webcast ${SRS_OBJS}/nginx/html/ &&
+
 # For SRS signaling.
 rm -rf ${SRS_OBJS}/nginx/html/demos &&
 cp -rf $SRS_WORKDIR/3rdparty/signaling/www/demos ${SRS_OBJS}/nginx/html/ &&
