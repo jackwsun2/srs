@@ -652,6 +652,7 @@ install:
 	@cp -f research/favicon.ico \$(__REAL_INSTALL)/objs/nginx/html
 	@cp -Rf research/players \$(__REAL_INSTALL)/objs/nginx/html/
 	@cp -Rf research/console \$(__REAL_INSTALL)/objs/nginx/html/
+    @cp -Rf research/webcast \$(__REAL_INSTALL)/objs/nginx/html/
 	@cp -Rf 3rdparty/signaling/www/demos \$(__REAL_INSTALL)/objs/nginx/html/
 	@echo "Now copy binary files"
 	@mkdir -p \$(__REAL_INSTALL)/objs
