@@ -773,9 +773,24 @@ srs_error_t SrsServer::http_handle()
     // The test api for get tcmalloc stats.
     // @see Memory Introspection in https://gperftools.github.io/gperftools/tcmalloc.html
     if ((err = http_api_mux->handle("/api/v1/tcmalloc", new SrsGoApiTcmalloc())) != srs_success) {
-        return srs_error_wrap(err, "handle tests errors");
+        return srs_error_wrap(err, "handle tcmalloc errors");
     }
 #endif
+
+#ifdef SRS_VALGRIND
+    // The test api for valgrind. See VALGRIND_DO_LEAK_CHECK in https://valgrind.org/docs/manual/mc-manual.html
+    if ((err = http_api_mux->handle("/api/v1/valgrind", new SrsGoApiValgrind())) != srs_success) {
+        return srs_error_wrap(err, "handle valgrind errors");
+    }
+#endif
+
+#ifdef SRS_SIGNAL_API
+    // Simulate the signal by HTTP API, for debug signal issues in CLion.
+    if ((err = http_api_mux->handle("/api/v1/signal", new SrsGoApiSignal())) != srs_success) {
+        return srs_error_wrap(err, "handle signal errors");
+    }
+#endif
+
     // metrics by prometheus
     if ((err = http_api_mux->handle("/metrics", new SrsGoApiMetrics())) != srs_success) {
         return srs_error_wrap(err, "handle tests errors");
