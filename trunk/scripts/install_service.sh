@@ -41,42 +41,43 @@ fi
 ok_msg "previous install checked"
 
 # backup old srs
-ok_msg "backup old srs"
+# ok_msg "backup old srs"
 install_root=$INSTALL
 install_bin=$install_root/objs/srs
-if [[ -d $install_root ]]; then
-    version="unknown"
-    if [[ -f $install_bin ]]; then
-        version=`$install_bin -v 2>/dev/stdout 1>/dev/null`
-    fi
-    
-    backup_dir=${install_root}.`date "+%Y-%m-%d_%H-%M-%S"`.v-$version
-    ok_msg "backup installed dir, version=$version"
-    ok_msg "    to=$backup_dir"
-    mv $install_root $backup_dir >>$log 2>&1
-    ret=$?; if [[ 0 -ne ${ret} ]]; then failed_msg "backup installed dir failed"; exit $ret; fi
-    ok_msg "backup installed dir success"
-fi
-ok_msg "old srs backuped"
+# if [[ -d $install_root ]]; then
+#     version="unknown"
+#     if [[ -f $install_bin ]]; then
+#         version=`$install_bin -v 2>/dev/stdout 1>/dev/null`
+#     fi
+#    
+#     backup_dir=${install_root}.`date "+%Y-%m-%d_%H-%M-%S"`.v-$version
+#     ok_msg "backup installed dir, version=$version"
+#     ok_msg "    to=$backup_dir"
+#     mv $install_root $backup_dir >>$log 2>&1
+#     ret=$?; if [[ 0 -ne ${ret} ]]; then failed_msg "backup installed dir failed"; exit $ret; fi
+#     ok_msg "backup installed dir success"
+# fi
+# ok_msg "old srs backuped"
+
 # prepare files.
-ok_msg "prepare files"
-(
-    sed -i "s|^ROOT=.*|ROOT=\"${INSTALL}\"|g" $work_dir/${INSTALL}/etc/init.d/srs
-) >> $log 2>&1
-ret=$?; if [[ 0 -ne ${ret} ]]; then failed_msg "prepare files failed"; exit $ret; fi
-ok_msg "prepare files success"
+# ok_msg "prepare files"
+# (
+#    sed -i "s|^ROOT=.*|ROOT=\"${INSTALL}\"|g" $work_dir/${INSTALL}/etc/init.d/srs
+# ) >> $log 2>&1
+# ret=$?; if [[ 0 -ne ${ret} ]]; then failed_msg "prepare files failed"; exit $ret; fi
+# ok_msg "prepare files success"
 
 # copy core files
-ok_msg "copy core components"
-(
-    mkdir -p $install_root
-    cp -r $work_dir/${INSTALL}/conf $install_root &&
-    cp -r $work_dir/${INSTALL}/etc $install_root &&
-    cp -r $work_dir/${INSTALL}/usr $install_root &&
-    cp -r $work_dir/${INSTALL}/objs $install_root
-) >>$log 2>&1
-ret=$?; if [[ 0 -ne ${ret} ]]; then failed_msg "copy core components failed"; exit $ret; fi
-ok_msg "copy core components success"
+# ok_msg "copy core components"
+# (
+#     mkdir -p $install_root
+#     cp -r $work_dir/${INSTALL}/conf $install_root &&
+#     cp -r $work_dir/${INSTALL}/etc $install_root &&
+#     cp -r $work_dir/${INSTALL}/usr $install_root &&
+#     cp -r $work_dir/${INSTALL}/objs $install_root
+# ) >>$log 2>&1
+# ret=$?; if [[ 0 -ne ${ret} ]]; then failed_msg "copy core components failed"; exit $ret; fi
+# ok_msg "copy core components success"
 
 # install init.d scripts
 ok_msg "install init.d scripts"
