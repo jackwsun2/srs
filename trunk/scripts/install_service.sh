@@ -93,7 +93,8 @@ if [[ -d /usr/lib/systemd/system ]]; then
     ok_msg "install srs.service for systemctl"
     (
         cp -f $install_root/usr/lib/systemd/system/srs.service /usr/lib/systemd/system/srs.service &&
-        systemctl daemon-reload
+        systemctl daemon-reload && systemctl enable srs
+
     ) >>$log 2>&1
     ret=$?; if [[ 0 -ne ${ret} ]]; then failed_msg "install srs.service for systemctl failed"; exit $ret; fi
     ok_msg "install srs.service for systemctl success"

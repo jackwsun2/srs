@@ -16,7 +16,7 @@ ROOT="/usr/local/srs"
 APP="./objs/srs"
 CONFIG="./conf/rtmp2rtc.conf"
 DEFAULT_PID_FILE='./objs/srs.pid'
-DEFAULT_LOG_FILE=$HOME'/srs.log'
+DEFAULT_LOG_FILE='./objs/srs.log'
 
 ########################################################################
 # utility functions
