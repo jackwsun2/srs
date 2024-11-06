@@ -64,6 +64,34 @@ $(function(){
             $('#rtc_media_player').hide();
             console.error(reason);
         });
+
+        // 监听RTCPeerConnection，连接断开时重载页面
+        if (sdk.pc) {
+            sdk.pc.addEventListener(
+                "connectionstatechange",
+                (event) => {
+                    switch (sdk.pc.connectionState) {
+                    case "new":
+                    case "connecting":
+                        console.log("RTCPeerConnection connecting");
+                        break;
+                    case "connected":
+                        console.log("RTCPeerConnection connected");
+                        break;
+                    case "disconnected":
+                    case "closed":
+                    case "failed":
+                        console.log("RTCPeerConnection error");
+                        location.reload();
+                        break;
+                    default:
+                        console.log("RTCPeerConnection Unknown");
+                        break;
+                    }
+                },
+                false,
+            );
+        }
     };
 
     $('#rtc_media_player').hide();
