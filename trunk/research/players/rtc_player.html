@@ -92,6 +92,9 @@ $(function(){
             $('#rtc_media_player').hide();
             console.error(reason);
         });
+        sdk.pc.onerror = (event) => {
+            console.error('WebRTC error: ', event);
+        };
     };
 
     $('#rtc_media_player').hide();

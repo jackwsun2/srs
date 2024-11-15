@@ -41,6 +41,13 @@
 <script type="text/javascript">
 $(function(){
     var sdk = null; // Global handler to do cleanup when replaying.
+    var replayTimes = 0; // 重播次数
+    var replay = function() {
+        replayTimes++;
+        setTimeout(() => {
+            startPlay();
+        }, replayTimes * 100);
+    };
     var startPlay = function() {
         // Close PC when user replay.
         if (sdk) {
@@ -56,11 +63,13 @@ $(function(){
         // For example: webrtc://r.ossrs.net/live/livestream
         var url = $("#txt_url").val();
         sdk.play(url).then(function(session){
+            replayTimes = 0;
             $('#rtc_media_player').show();
             $('#sessionid').html(session.sessionid);
             $('#simulator-drop').attr('href', session.simulator + '?drop=1&username=' + session.sessionid);
         }).catch(function (reason) {
             sdk.close();
+            replay();
             $('#rtc_media_player').hide();
             console.error(reason);
         });
@@ -82,7 +91,7 @@ $(function(){
                     case "closed":
                     case "failed":
                         console.log("RTCPeerConnection error");
-                        location.reload();
+                        replay();
                         break;
                     default:
                         console.log("RTCPeerConnection Unknown");
